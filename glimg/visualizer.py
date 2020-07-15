@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import .detbbox as detbbox
+from glimg import detbbox
 
 def draw_bbox(img, bbox, color=(0,255,255), width=2, xywh=False):
     assert(len(bbox)==4)
@@ -84,5 +84,5 @@ def draw_3dbox_on_bev(bev_img, g_corners, res=0.1, xrange=(-40, 40), zrange=(0, 
 
 def get_bev_with_3dbbox(points, g_corners, res=0.1, xrange=(-40, 40), zrange=(0, 70), hrange=(-2, 1), hist_scale=(0, 255), cont_color=(0,0,255)):
     bev_img = get_bev_img(points, res, xrange, zrange, hrange, hist_scale)
-    bev_img = draw_3dbox_on_bev(bev_img, g_corners, res, xrange, zrange, hrange, hist_scale, cont_color)
+    bev_img = draw_3dbox_on_bev(bev_img, g_corners, res, xrange, zrange, cont_color)
     return bev_img
