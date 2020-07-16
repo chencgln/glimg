@@ -32,6 +32,12 @@ def draw_3dbbox(img, corns_2d, width=2, color=None):
 
     return img
 
+def empty_bev(xrange, zrange, res):
+    u_max = 1 + int((xrange[1] - xrange[0]) / res)
+    v_max = 1 + int((zrange[1] - zrange[0]) / res)
+    bev_img = np.ones([v_max, u_max], dtype=np.uint8)*255
+    return bev_img
+
 def get_bev_img(points, res=0.1, xrange=(-40, 40), zrange=(0, 70), hrange=(-2, 1), hist_scale=(0, 255)):
     '''
     points: shape (-1, 4) -- [x,y,z,s]; x->forward, y->left, z->up
@@ -65,11 +71,9 @@ def get_bev_img(points, res=0.1, xrange=(-40, 40), zrange=(0, 70), hrange=(-2, 1
     
     pixel_value = scale_hist(pixel_value)
 
-    u_max = 1 + int((xrange[1] - xrange[0]) / res)
-    v_max = 1 + int((zrange[1] - zrange[0]) / res)
-    img = np.ones([v_max, u_max], dtype=np.uint8)*255
+    img = empty_bev(xrange, zrange, res)
     img[v_img, u_img] = pixel_value
-    img = np.reshape(img, (v_max, u_max, 1))
+    img = np.reshape(img, (img.reshape[0], img.reshape[1], 1))
     img = np.concatenate([img, img, img], axis=-1)
     return img
 
@@ -82,7 +86,18 @@ def draw_3dbox_on_bev(bev_img, g_corners, res=0.1, xrange=(-40, 40), zrange=(0, 
     cv2.drawContours(bev_img, [corners_bev_xz], -1, cont_color, 1)
     return bev_img
 
+def get_bev_3dbox_img(g_corners, res=0.1, xrange=(-40, 40), zrange=(0, 70), cont_color=(0,0,255)):
+    assert(g_corners.shape==(3,8))
+    bev_img = empty_bev(xrange, zrange, res)
+    corners_bev_xz = np.transpose(g_corners)[..., [0,2]]
+    corners_bev_xz[..., 0] = (corners_bev_xz[..., 0]-xrange[0])/res
+    corners_bev_xz[..., 1] = (zrange[1]-corners_bev_xz[..., 1])/res
+    corners_bev_xz = corners_bev_xz.astype(np.int)
+    cv2.drawContours(bev_img, [corners_bev_xz], -1, cont_color, 1)
+    return bev_img
+
 def get_bev_with_3dbbox(points, g_corners, res=0.1, xrange=(-40, 40), zrange=(0, 70), hrange=(-2, 1), hist_scale=(0, 255), cont_color=(0,0,255)):
     bev_img = get_bev_img(points, res, xrange, zrange, hrange, hist_scale)
     bev_img = draw_3dbox_on_bev(bev_img, g_corners, res, xrange, zrange, cont_color)
     return bev_img
+
