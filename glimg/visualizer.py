@@ -94,7 +94,7 @@ def get_bev_3dbox_img(g_corners, res=0.1, xrange=(-40, 40), zrange=(0, 70), cont
     corners_bev_xz[..., 1] = (zrange[1]-corners_bev_xz[..., 1])/res
     corners_bev_xz = corners_bev_xz.astype(np.int)
     cv2.drawContours(bev_img, [corners_bev_xz], -1, cont_color, 1)
-    return bev_img
+    return bev_img 
 
 def get_bev_with_3dbbox(points, g_corners, res=0.1, xrange=(-40, 40), zrange=(0, 70), hrange=(-2, 1), hist_scale=(0, 255), cont_color=(0,0,255)):
     bev_img = get_bev_img(points, res, xrange, zrange, hrange, hist_scale)
