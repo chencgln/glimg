@@ -15,7 +15,7 @@ def draw_3dbbox(img, corns_2d, width=2, color=None):
     corns_2d: 2*8 or 1*16: [x1,y1, x2,y2,..., x8,y8]
     '''
     corns_2d = np.array(corns_2d, dtype=np.int)
-    corns_2d = corns_2d.reshape(2, 8)
+    corns_2d = corns_2d.reshape(-1, 2)
     if color is None:
         cont_color = (255,0,0)
         front_color = (0,255,0)
