@@ -46,15 +46,15 @@ def global_corners(dims, ry, locat):
     global_corns = local_corns + locat
     return global_corns
 
-def projcted_3d_corns(global_corns, P2):
-    global_corners = np.concatenate([transed_corners, np.ones((1,8))], axis=0)
+def project_global_corns(global_corns, P2):
+    global_corners = np.concatenate([global_corns, np.ones((1,8))], axis=0)
     proj_points = np.dot(P2, global_corners)
-    proj_points[0,:] = proj_points[0,:]/proj_points[2,:];
-    proj_points[1,:] = proj_points[1,:]/proj_points[2,:];
+    proj_points[0,:] = proj_points[0,:]/proj_points[2,:]
+    proj_points[1,:] = proj_points[1,:]/proj_points[2,:]
     proj_points = np.transpose(proj_points[:2,:])
     return proj_points
 
-def projcted_3d_corns(dims, ry, locat, P2):
+def project_corns_from_dims(dims, ry, locat, P2):
     global_corns = global_corners(dims, ry, locat)
     global_corns = np.concatenate([global_corns, np.ones((1,8))], axis=0)
     proj_points = np.dot(P2, global_corns)

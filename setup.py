@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="glimg",
-    version="0.0.5",
+    version="0.0.6",
     author="glchen",
     author_email="chencglt@gmail.com",
     description="image processing tool for computer vision",
