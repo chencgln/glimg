@@ -32,7 +32,7 @@ def draw_3dbbox(img, corns_2d, width=2, color=None):
 
     return img
 
-def empty_bev(xrange, zrange, res):
+def empty_bev(xrange=(-40, 40), zrange=(0, 70), res=0.1):
     u_max = 1 + int((xrange[1] - xrange[0]) / res)
     v_max = 1 + int((zrange[1] - zrange[0]) / res)
     bev_img = np.ones([v_max, u_max], dtype=np.uint8)*255
@@ -86,18 +86,25 @@ def draw_3dbox_on_bev(bev_img, g_corners, res=0.1, xrange=(-40, 40), zrange=(0, 
     cv2.drawContours(bev_img, [corners_bev_xz], -1, cont_color, 1)
     return bev_img
 
-def get_bev_3dbox_img(g_corners, res=0.1, xrange=(-40, 40), zrange=(0, 70), cont_color=(0,0,255)):
-    assert(g_corners.shape==(3,8))
+def get_empyty_bev_with_3dbboxes(g_corners_list, res=0.1, xrange=(-40, 40), zrange=(0, 70), cont_color=(0,0,255)):
     bev_img = empty_bev(xrange, zrange, res)
-    corners_bev_xz = np.transpose(g_corners)[..., [0,2]]
-    corners_bev_xz[..., 0] = (corners_bev_xz[..., 0]-xrange[0])/res
-    corners_bev_xz[..., 1] = (zrange[1]-corners_bev_xz[..., 1])/res
-    corners_bev_xz = corners_bev_xz.astype(np.int)
-    cv2.drawContours(bev_img, [corners_bev_xz], -1, cont_color, 1)
-    return bev_img 
-
-def get_bev_with_3dbbox(points, g_corners, res=0.1, xrange=(-40, 40), zrange=(0, 70), hrange=(-2, 1), hist_scale=(0, 255), cont_color=(0,0,255)):
-    bev_img = get_bev_img(points, res, xrange, zrange, hrange, hist_scale)
-    bev_img = draw_3dbox_on_bev(bev_img, g_corners, res, xrange, zrange, cont_color)
+    for g_corners in g_corners_list:
+        draw_3dbox_on_bev(bev_img, g_corners, res, xrange, zrange, cont_color)
     return bev_img
+
+def get_bev_with_3dbboxes(points, g_corners_list, res=0.1, xrange=(-40, 40), zrange=(0, 70), hrange=(-2, 1), hist_scale=(0, 255), cont_color=(0,0,255)):
+    bev_img = get_bev_img(points, res, xrange, zrange, hrange, hist_scale)
+    for g_corners in g_corners_list:
+        draw_3dbox_on_bev(bev_img, g_corners, res, xrange, zrange, cont_color)
+    return bev_img
+
+def draw_orien_vect(center_xyz, ry, obj_height=None):
+    '''
+    descripttion: 
+    param {type} 
+    return {type} 
+    ''' 
+    if h is not None:
+        center_xyz[1] -= obj_height/2.
+     
 

@@ -1,3 +1,9 @@
+'''
+Author: glchen
+Date: 2020-07-15 17:34:48
+LastEditTime: 2020-08-08 12:49:56
+Description: In User Settings Edit
+'''
 import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -17,3 +23,8 @@ setuptools.setup(
         # "License :: OSI Approved :: Apache License",
         # "Operating System :: OS Independent",
 )
+
+
+
+
+
