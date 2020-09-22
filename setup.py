@@ -1,7 +1,7 @@
 '''
 Author: glchen
 Date: 2020-07-15 17:34:48
-LastEditTime: 2020-08-18 16:30:45
+LastEditTime: 2020-08-18 16:56:24
 Description: In User Settings Edit
 '''
 
@@ -12,7 +12,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="glimg",
-    version="0.0.11",
+    version="0.0.12",
     author="glchen",
     author_email="chencglt@gmail.com",
     description="image processing tool for computer vision",

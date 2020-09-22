@@ -148,16 +148,93 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <div class="viewcode-block" id="xywh2xyxy"><a class="viewcode-back" href="../../rst/glimg.html#glimg.detbbox.xywh2xyxy">[docs]</a><span class="k">def</span> <span class="nf">xywh2xyxy</span><span class="p">(</span><span class="n">bbox</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    change bbox coord from [x,y,w,h] to [xmin,ymin,xmax,ymax]</span>
+<span class="sd">    </span>
+<span class="sd">    param:</span>
+<span class="sd">        bbox: bounding represented by a list: [x,y,w,h]</span>
+<span class="sd">    return:</span>
+<span class="sd">        bbox: bounding represented by a list: [xmin,ymin,xmax,ymax]</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bbox</span><span class="p">)</span><span class="o">==</span><span class="mi">4</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="xyxy2xywh"><a class="viewcode-back" href="../../rst/glimg.html#glimg.detbbox.xyxy2xywh">[docs]</a><span class="k">def</span> <span class="nf">xyxy2xywh</span><span class="p">(</span><span class="n">bbox</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    change bbox coord from [xmin,ymin,xmax,ymax] to [x,y,w,h]</span>
+<span class="sd">    </span>
+<span class="sd">    param</span>
+<span class="sd">        bbox: bounding represented by a list: [xmin,ymin,xmax,ymax]</span>
+<span class="sd">    return</span>
+<span class="sd">        bbox: bounding represented by a list: [x,y,w,h]</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bbox</span><span class="p">)</span><span class="o">==</span><span class="mi">4</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">[(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">bbox</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">-</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span></div>
 
+<div class="viewcode-block" id="bbox_union"><a class="viewcode-back" href="../../rst/glimg.html#glimg.detbbox.bbox_union">[docs]</a><span class="k">def</span> <span class="nf">bbox_union</span><span class="p">(</span><span class="n">bbox1</span><span class="p">,</span> <span class="n">bbox2</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    return the union area of two bboxes. </span>
+<span class="sd">    </span>
+<span class="sd">    param </span>
+<span class="sd">        bbox1: bounding represented by a list: [xmin,ymin,xmax,ymax]</span>
+<span class="sd">        bbox2: bounding with the same representation as bbox1</span>
+<span class="sd">    return</span>
+<span class="sd">        bbox_union: the union area of bbox1 and bbox2</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bbox1</span><span class="p">)</span><span class="o">==</span><span class="mi">4</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">bbox2</span><span class="p">)</span><span class="o">==</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">intersection</span> <span class="o">=</span> <span class="n">bbox_intersection</span><span class="p">(</span><span class="n">bbox1</span><span class="p">,</span> <span class="n">bbox2</span><span class="p">)</span>
+    <span class="n">area1</span> <span class="o">=</span> <span class="p">(</span><span class="n">bbox1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">bbox1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">bbox1</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">-</span><span class="n">bbox1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">area2</span> <span class="o">=</span> <span class="p">(</span><span class="n">bbox2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">bbox2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">bbox2</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">-</span><span class="n">bbox2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">area1</span><span class="o">+</span><span class="n">area2</span><span class="o">-</span><span class="n">intersection</span></div>
+    
+<div class="viewcode-block" id="bbox_intersection"><a class="viewcode-back" href="../../rst/glimg.html#glimg.detbbox.bbox_intersection">[docs]</a><span class="k">def</span> <span class="nf">bbox_intersection</span><span class="p">(</span><span class="n">bbox1</span><span class="p">,</span> <span class="n">bbox2</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    return the intersection area of two bboxes</span>
+<span class="sd">    </span>
+<span class="sd">    param</span>
+<span class="sd">        bbox1: bounding represented by a list: [xmin,ymin,xmax,ymax]</span>
+<span class="sd">        bbox2: bounding with the same representation as bbox1</span>
+<span class="sd">    return</span>
+<span class="sd">        intersection: the intersection area of bbox1 and bbox2</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bbox1</span><span class="p">)</span><span class="o">==</span><span class="mi">4</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">bbox2</span><span class="p">)</span><span class="o">==</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">xmin</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">bbox1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bbox2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">ymin</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">bbox1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bbox2</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">xmax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">bbox1</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">bbox2</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">ymax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">bbox1</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">bbox2</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">xmax</span><span class="o">&lt;</span><span class="n">xmin</span> <span class="ow">or</span> <span class="n">ymax</span><span class="o">&lt;</span><span class="n">ymin</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">xmax</span><span class="o">-</span><span class="n">xmin</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">ymax</span><span class="o">-</span><span class="n">ymin</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="bbox_iou"><a class="viewcode-back" href="../../rst/glimg.html#glimg.detbbox.bbox_iou">[docs]</a><span class="k">def</span> <span class="nf">bbox_iou</span><span class="p">(</span><span class="n">bbox1</span><span class="p">,</span> <span class="n">bbox2</span><span class="p">,</span> <span class="n">xywh</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    return the IOU (Intersection Over Union) of two bboxes</span>
+<span class="sd">    </span>
+<span class="sd">    param </span>
+<span class="sd">        bbox1: bounding represented by a list: [xmin,ymin,xmax,ymax]</span>
+<span class="sd">        bbox2: bounding with the same representation as bbox1</span>
+<span class="sd">        xywh: flag indicates if bboxes are represented by [x,y,w,h] format</span>
+<span class="sd">    return</span>
+<span class="sd">        intersection: the intersection area of bbox1 and bbox2</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bbox1</span><span class="p">)</span><span class="o">==</span><span class="mi">4</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">bbox2</span><span class="p">)</span><span class="o">==</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">xywh</span><span class="p">:</span>
+        <span class="n">bbox1</span> <span class="o">=</span> <span class="n">xywh2xyxy</span><span class="p">(</span><span class="n">bbox1</span><span class="p">)</span>
+        <span class="n">bbox2</span> <span class="o">=</span> <span class="n">xywh2xyxy</span><span class="p">(</span><span class="n">bbox2</span><span class="p">)</span>
+    <span class="n">inter</span> <span class="o">=</span> <span class="n">bbox_intersection</span><span class="p">(</span><span class="n">bbox1</span><span class="p">,</span> <span class="n">bbox2</span><span class="p">)</span>
+    <span class="n">union</span> <span class="o">=</span> <span class="n">bbox_union</span><span class="p">(</span><span class="n">bbox1</span><span class="p">,</span> <span class="n">bbox2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">inter</span><span class="o">/</span><span class="n">union</span></div>
 
 <span class="c1">#----------------------3D BBox-----------------#</span>
 <div class="viewcode-block" id="ry_matrix"><a class="viewcode-back" href="../../rst/glimg.html#glimg.detbbox.ry_matrix">[docs]</a><span class="k">def</span> <span class="nf">ry_matrix</span><span class="p">(</span><span class="n">ry</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    get the rotation matrix for given yaw (rad)</span>
+<span class="sd">    </span>
+<span class="sd">    param:</span>
+<span class="sd">        ry: yaw angle (rad)</span>
+<span class="sd">    return: </span>
+<span class="sd">        rotation matrix</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">RY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([[</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ry</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ry</span><span class="p">)],</span>
                     <span class="p">[</span>          <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>          <span class="mi">0</span><span class="p">],</span>
                     <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ry</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ry</span><span class="p">)]])</span>
@@ -165,9 +242,14 @@
 
 <div class="viewcode-block" id="local_corners"><a class="viewcode-back" href="../../rst/glimg.html#glimg.detbbox.local_corners">[docs]</a><span class="k">def</span> <span class="nf">local_corners</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">ry</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    dims: h, w, l</span>
-<span class="sd">    ry: rad; 0-&gt;right, 90-&gt;forward, 180-&gt;left</span>
-<span class="sd">    return: shape(3*8)</span>
+<span class="sd">    given the dimension and yaw angle, calculate the 3D coordinates of 3D BBox eight corners. </span>
+<span class="sd">    The origin of the coordinate system if the object center.</span>
+<span class="sd">    </span>
+<span class="sd">    param:</span>
+<span class="sd">        dims: object dimension represented by [h,w,l]</span>
+<span class="sd">        ry: object yaw angle (rad)</span>
+<span class="sd">    return:</span>
+<span class="sd">        numpy array of 3D coordinates with shape (3*8)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dims</span><span class="p">)</span><span class="o">==</span><span class="mi">3</span><span class="p">)</span>
     <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="n">dims</span>
@@ -182,33 +264,54 @@
 
 <div class="viewcode-block" id="global_corners"><a class="viewcode-back" href="../../rst/glimg.html#glimg.detbbox.global_corners">[docs]</a><span class="k">def</span> <span class="nf">global_corners</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">locat</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    dims: h, w, l</span>
-<span class="sd">    ry: rad; 0-&gt;right, 90-&gt;forward, 180-&gt;left</span>
-<span class="sd">    locat: </span>
-<span class="sd">    return: shape(3*8)</span>
+<span class="sd">    given the dimension, yaw angle and object location, calculate the 3D world coordinates of 3D BBox eight corners. </span>
+<span class="sd">    </span>
+<span class="sd">    param:</span>
+<span class="sd">        dims: object dimension represented by [h,w,l]</span>
+<span class="sd">        ry: object yaw angle (rad)</span>
+<span class="sd">        locat: object location in world coordinate system (usually the camera coordinate system), represented as [x,y,z]</span>
+<span class="sd">    return:</span>
+<span class="sd">        numpy array of 3D coordinates with shape (3*8)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">locat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">locat</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">local_corns</span> <span class="o">=</span> <span class="n">local_corners</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">ry</span><span class="p">)</span>
     <span class="n">global_corns</span> <span class="o">=</span> <span class="n">local_corns</span> <span class="o">+</span> <span class="n">locat</span>
     <span class="k">return</span> <span class="n">global_corns</span></div>
 
-<div class="viewcode-block" id="project_global_corns"><a class="viewcode-back" href="../../rst/glimg.html#glimg.detbbox.project_global_corns">[docs]</a><span class="k">def</span> <span class="nf">project_global_corns</span><span class="p">(</span><span class="n">global_corns</span><span class="p">,</span> <span class="n">P2</span><span class="p">):</span>
+<div class="viewcode-block" id="project_global_corns"><a class="viewcode-back" href="../../rst/glimg.html#glimg.detbbox.project_global_corns">[docs]</a><span class="k">def</span> <span class="nf">project_global_corns</span><span class="p">(</span><span class="n">global_corns</span><span class="p">,</span> <span class="n">project_mat</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Given the global corners and projection matrix of camera, </span>
+<span class="sd">    calculate the projected coordinates of 8 global corners in image.</span>
+<span class="sd">    </span>
+<span class="sd">    param:</span>
+<span class="sd">        global_corns: numpy array of 3D coordinates with shape (3*8)</span>
+<span class="sd">        project_mat: projection matrix in KITTI&#39;s format. Shape (3*4), [:,0:3]: intrinsic, [:,3]: extrinsic</span>
+<span class="sd">    return:</span>
+<span class="sd">        numpy array of 2D coordinates with shape (2*8)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">global_corners</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">global_corns</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">))],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">proj_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">P2</span><span class="p">,</span> <span class="n">global_corners</span><span class="p">)</span>
+    <span class="n">proj_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">project_mat</span><span class="p">,</span> <span class="n">global_corners</span><span class="p">)</span>
     <span class="n">proj_points</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">proj_points</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span><span class="o">/</span><span class="n">proj_points</span><span class="p">[</span><span class="mi">2</span><span class="p">,:]</span>
     <span class="n">proj_points</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">proj_points</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span><span class="o">/</span><span class="n">proj_points</span><span class="p">[</span><span class="mi">2</span><span class="p">,:]</span>
     <span class="n">proj_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">proj_points</span><span class="p">[:</span><span class="mi">2</span><span class="p">,:])</span>
     <span class="k">return</span> <span class="n">proj_points</span></div>
 
-<div class="viewcode-block" id="project_corns_from_dims"><a class="viewcode-back" href="../../rst/glimg.html#glimg.detbbox.project_corns_from_dims">[docs]</a><span class="k">def</span> <span class="nf">project_corns_from_dims</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">locat</span><span class="p">,</span> <span class="n">P2</span><span class="p">):</span>
+<div class="viewcode-block" id="project_corns_from_dims"><a class="viewcode-back" href="../../rst/glimg.html#glimg.detbbox.project_corns_from_dims">[docs]</a><span class="k">def</span> <span class="nf">project_corns_from_dims</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">locat</span><span class="p">,</span> <span class="n">project_mat</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Given the object&#39;s dims and pose, as well as the projection matrix, </span>
+<span class="sd">    calculate the projected coordinates of 8 global corners in image.</span>
+<span class="sd">    </span>
+<span class="sd">    param:</span>
+<span class="sd">        dims: object dimension represented by [h,w,l]</span>
+<span class="sd">        ry: object yaw angle (rad)</span>
+<span class="sd">        locat: object location in world coordinate system (usually the camera coordinate system), represented as [x,y,z]</span>
+<span class="sd">        project_mat: projection matrix in KITTI&#39;s format. Shape (3*4), [:,0:3]: intrinsic, [:,3]: extrinsic</span>
+<span class="sd">    return:</span>
+<span class="sd">        numpy array of 2D coordinates with shape (2*8)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">global_corns</span> <span class="o">=</span> <span class="n">global_corners</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">locat</span><span class="p">)</span>
-    <span class="n">global_corns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">global_corns</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">))],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">proj_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">P2</span><span class="p">,</span> <span class="n">global_corns</span><span class="p">)</span>
-    <span class="n">proj_points</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">proj_points</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span><span class="o">/</span><span class="n">proj_points</span><span class="p">[</span><span class="mi">2</span><span class="p">,:]</span>
-    <span class="n">proj_points</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">proj_points</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span><span class="o">/</span><span class="n">proj_points</span><span class="p">[</span><span class="mi">2</span><span class="p">,:]</span>
-    <span class="n">proj_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">proj_points</span><span class="p">[:</span><span class="mi">2</span><span class="p">,:])</span>
+    <span class="n">proj_points</span> <span class="o">=</span> <span class="n">project_global_corns</span><span class="p">(</span><span class="n">global_corns</span><span class="p">,</span> <span class="n">project_mat</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">proj_points</span></div>
-
 </pre></div>
 
            </div>
